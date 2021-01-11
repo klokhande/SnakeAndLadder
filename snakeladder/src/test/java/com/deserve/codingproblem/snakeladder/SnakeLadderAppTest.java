@@ -2,6 +2,7 @@ package com.deserve.codingproblem.snakeladder;
 
 import com.deserve.codingproblem.snakeladder.dices.Dice;
 import com.deserve.codingproblem.snakeladder.dices.NormalDice;
+import com.deserve.codingproblem.snakeladder.exceptions.InvalidDataException;
 import com.deserve.codingproblem.snakeladder.models.GameResult;
 import com.deserve.codingproblem.snakeladder.utils.SnakeLadderConstant;
 import org.junit.Assert;
@@ -12,7 +13,7 @@ import java.io.ByteArrayInputStream;
 
 public class SnakeLadderAppTest {
   @Test
-  public void testPlayMethodWithNormalDice() {
+  public void testPlayMethodWithNormalDice() throws InvalidDataException {
     SnakeLadderApp snakeLadderApp = new SnakeLadderApp(new NormalDice(), new SnakeLadderBoard());
     String userInputs = "r\nr\nn";
     System.setIn(new ByteArrayInputStream(userInputs.getBytes()));
@@ -43,7 +44,7 @@ public class SnakeLadderAppTest {
   }
 
   @Test
-  public void testPlayMethodWithCustomDice() {
+  public void testPlayMethodWithCustomDice() throws InvalidDataException {
     SnakeLadderBoard snakeLadderBoard = new SnakeLadderBoard();
     //Custom dice that returns 20 for each throw
     Dice dice = new Dice() {

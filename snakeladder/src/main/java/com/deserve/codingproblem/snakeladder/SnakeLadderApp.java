@@ -2,6 +2,7 @@ package com.deserve.codingproblem.snakeladder;
 
 import com.deserve.codingproblem.snakeladder.dices.Dice;
 import com.deserve.codingproblem.snakeladder.dices.NormalDice;
+import com.deserve.codingproblem.snakeladder.exceptions.InvalidDataException;
 import com.deserve.codingproblem.snakeladder.models.GameResult;
 import com.deserve.codingproblem.snakeladder.utils.SnakeLadderConstant;
 
@@ -17,7 +18,7 @@ public class SnakeLadderApp {
     this.snakeLadderBoard = snakeLadderBoard;
   }
 
-  public GameResult play() {
+  public GameResult play() throws InvalidDataException {
     Scanner scanner = new Scanner(System.in);
     int turns = 0;
     while(!snakeLadderBoard.hasWon() && turns < TOTAL_TURNS) {
@@ -46,7 +47,13 @@ public class SnakeLadderApp {
   }
 
   public static void main(String[] args) {
-    GameResult result = new SnakeLadderApp(new NormalDice(), new SnakeLadderBoard()).play();
+    GameResult result = null;
+    try {
+      result = new SnakeLadderApp(new NormalDice(), new SnakeLadderBoard()).play();
+    } catch (InvalidDataException e) {
+      System.out.println("Error occurred: "+e.getMessage());
+      System.exit(1);
+    }
     System.out.println(result.getMessage());
     System.out.println("Total turns taken: "+result.getTurnsTaken());
   }
