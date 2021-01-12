@@ -1,6 +1,7 @@
 package com.deserve.codingproblem.snakeladder;
 
 import com.deserve.codingproblem.snakeladder.dices.Dice;
+import com.deserve.codingproblem.snakeladder.dices.DiceFactory;
 import com.deserve.codingproblem.snakeladder.dices.NormalDice;
 import com.deserve.codingproblem.snakeladder.exceptions.InvalidDataException;
 import com.deserve.codingproblem.snakeladder.models.GameResult;
@@ -22,6 +23,7 @@ public class SnakeLadderApp {
   public GameResult play() throws InvalidDataException {
     Scanner scanner = new Scanner(System.in);
     int turns = 0;
+    //Run the game for 10 turns or till game is won, whichever comes first
     while(!snakeLadderBoard.hasWon() && turns < TOTAL_TURNS) {
       System.out.println("Press R or r to throw the dice");
       String input = scanner.next();
@@ -48,8 +50,14 @@ public class SnakeLadderApp {
   }
 
   public static void main(String[] args) {
+    String dicetype = System.getProperty(SnakeLadderConstant.PROP_DICE_TYPE);
+    if(dicetype == null || dicetype.isEmpty()) {
+      dicetype = SnakeLadderConstant.DICE_TYPE_NORMAL;
+    }
+
     GameResult result = null;
     try {
+      Dice dice = DiceFactory.getInstance().getDice(dicetype);
       HashMap<Integer, Integer> snakes = new HashMap<Integer, Integer>();
       snakes.put(99, 69);
       snakes.put(91, 71);
@@ -58,7 +66,7 @@ public class SnakeLadderApp {
       snakes.put(47, 19);
       snakes.put(34, 1);
       snakes.put(25, 5);
-      result = new SnakeLadderApp(new NormalDice(), new SnakeLadderBoard(snakes)).play();
+      result = new SnakeLadderApp(dice, new SnakeLadderBoard(snakes)).play();
     } catch (InvalidDataException e) {
       System.out.println("Error occurred: "+e.getMessage());
       System.exit(1);

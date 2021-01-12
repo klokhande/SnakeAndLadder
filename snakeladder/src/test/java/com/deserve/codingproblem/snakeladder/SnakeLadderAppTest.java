@@ -1,5 +1,6 @@
 package com.deserve.codingproblem.snakeladder;
 
+import com.deserve.codingproblem.snakeladder.dices.CrookedDice;
 import com.deserve.codingproblem.snakeladder.dices.Dice;
 import com.deserve.codingproblem.snakeladder.dices.NormalDice;
 import com.deserve.codingproblem.snakeladder.exceptions.InvalidDataException;
@@ -62,6 +63,17 @@ public class SnakeLadderAppTest {
     //Even though there are 10 r inputs from user, the game should get completed in 5 turns as dice returns 20 everytime.
     Assert.assertEquals(5, result.getTurnsTaken());
 
+  }
+
+  public void testPlayMethodWithCrookedDice() throws InvalidDataException {
+    Dice dice = new CrookedDice();
+    SnakeLadderBoard snakeLadderBoard = new SnakeLadderBoard(new HashMap<>());
+    //Creating snakeLadderBoard with no snakes and CrookedDice. So all the steps in taken on the board should be even
+    SnakeLadderApp snakeLadderApp = new SnakeLadderApp(dice, snakeLadderBoard);
+    String userInputs = "r\nr\nr\nr\nr\nr\nr\nr\nr\nr\n";
+    System.setIn(new ByteArrayInputStream(userInputs.getBytes()));
+    GameResult result = snakeLadderApp.play();
+    Assert.assertEquals(0, snakeLadderBoard.getCurrentPosition() % 2);
   }
 
 }
