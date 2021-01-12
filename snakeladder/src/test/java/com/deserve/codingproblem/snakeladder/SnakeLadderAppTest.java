@@ -9,12 +9,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
+import java.util.HashMap;
 
 
 public class SnakeLadderAppTest {
   @Test
   public void testPlayMethodWithNormalDice() throws InvalidDataException {
-    SnakeLadderApp snakeLadderApp = new SnakeLadderApp(new NormalDice(), new SnakeLadderBoard());
+    SnakeLadderApp snakeLadderApp = new SnakeLadderApp(new NormalDice(), new SnakeLadderBoard(new HashMap<>()));
     String userInputs = "r\nr\nn";
     System.setIn(new ByteArrayInputStream(userInputs.getBytes()));
     GameResult result = snakeLadderApp.play();
@@ -22,7 +23,7 @@ public class SnakeLadderAppTest {
     Assert.assertEquals(SnakeLadderConstant.GANE_OVER_MSG, result.getMessage());
     Assert.assertEquals(2, result.getTurnsTaken());
     //Try with 10 r inputs
-    snakeLadderApp = new SnakeLadderApp(new NormalDice(), new SnakeLadderBoard());
+    snakeLadderApp = new SnakeLadderApp(new NormalDice(), new SnakeLadderBoard(new HashMap<>()));
     userInputs = "r\nr\nr\nr\nr\nr\nr\nr\nr\nr\n";
     System.setIn(new ByteArrayInputStream(userInputs.getBytes()));
     result = snakeLadderApp.play();
@@ -30,13 +31,13 @@ public class SnakeLadderAppTest {
     Assert.assertEquals(10, result.getTurnsTaken());
     //Try with R inputs
 
-    snakeLadderApp = new SnakeLadderApp(new NormalDice(), new SnakeLadderBoard());
+    snakeLadderApp = new SnakeLadderApp(new NormalDice(), new SnakeLadderBoard(new HashMap<>()));
     userInputs = "R\nR\nR\nx";
     System.setIn(new ByteArrayInputStream(userInputs.getBytes()));
     result = snakeLadderApp.play();
     Assert.assertEquals(3, result.getTurnsTaken());
     //Try with mix of R and r inputs
-    snakeLadderApp = new SnakeLadderApp(new NormalDice(), new SnakeLadderBoard());
+    snakeLadderApp = new SnakeLadderApp(new NormalDice(), new SnakeLadderBoard(new HashMap<>()));
     userInputs = "R\nR\nR\nr\nr\nx";
     System.setIn(new ByteArrayInputStream(userInputs.getBytes()));
     result = snakeLadderApp.play();
@@ -45,7 +46,7 @@ public class SnakeLadderAppTest {
 
   @Test
   public void testPlayMethodWithCustomDice() throws InvalidDataException {
-    SnakeLadderBoard snakeLadderBoard = new SnakeLadderBoard();
+    SnakeLadderBoard snakeLadderBoard = new SnakeLadderBoard(new HashMap<>());
     //Custom dice that returns 20 for each throw
     Dice dice = new Dice() {
       public int throwDice() {

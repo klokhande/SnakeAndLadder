@@ -6,6 +6,7 @@ import com.deserve.codingproblem.snakeladder.exceptions.InvalidDataException;
 import com.deserve.codingproblem.snakeladder.models.GameResult;
 import com.deserve.codingproblem.snakeladder.utils.SnakeLadderConstant;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class SnakeLadderApp {
@@ -49,7 +50,15 @@ public class SnakeLadderApp {
   public static void main(String[] args) {
     GameResult result = null;
     try {
-      result = new SnakeLadderApp(new NormalDice(), new SnakeLadderBoard()).play();
+      HashMap<Integer, Integer> snakes = new HashMap<Integer, Integer>();
+      snakes.put(99, 69);
+      snakes.put(91, 71);
+      snakes.put(87, 57);
+      snakes.put(65, 52);
+      snakes.put(47, 19);
+      snakes.put(34, 1);
+      snakes.put(25, 5);
+      result = new SnakeLadderApp(new NormalDice(), new SnakeLadderBoard(snakes)).play();
     } catch (InvalidDataException e) {
       System.out.println("Error occurred: "+e.getMessage());
       System.exit(1);
